@@ -271,3 +271,116 @@ html {
   .side-decor { display: none; }
   .content { padding-left: 2rem; padding-right: 2rem; }
 }
+
+/* Responsive adjustments: hero/header, blocks, nav, and anchor offsets */
+
+/* Make the header-image adapt to narrow screens: use auto height on phones,
+   keep cover behaviour and preserve focal point. */
+@media (max-width: 900px) {
+  .header-image {
+    height: auto;             /* let image determine height on small screens */
+    min-height: 220px;        /* ensure visible area */
+  }
+
+  .header-image img {
+    position: relative;       /* not absolute so layout flows on mobile */
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center 30%; /* adjust focal point if needed */
+    display: block;
+  }
+
+  /* If .hero is present in HTML, make it mobile-friendly */
+  .hero {
+    width: 100%;
+    aspect-ratio: 21/9;
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-attachment: scroll; /* avoid fixed background on mobile */
+    padding: 1rem;
+  }
+
+  .hero .overlay {
+    padding: 1.25rem;
+    max-width: 90%;
+  }
+
+  /* Nav: compact and centered on mobile */
+  .transparent-nav {
+    padding: .5rem 1rem;
+  }
+  .transparent-nav ul {
+    justify-content: center;
+    gap: 0.85rem;
+  }
+  .transparent-nav a {
+    font-size: 0.95rem;
+    padding: 0.25rem 0.4rem;
+  }
+
+  /* Blocks: stack vertically, image full width above text */
+  .content {
+    padding: 1rem;            /* reduce outer padding on mobile */
+    margin: 2rem auto;
+    gap: 1.25rem;
+  }
+
+  .block {
+    flex-direction: column !important;
+    text-align: left;
+    background: rgba(0,0,0,0.35); /* keep contrast if you made blocks transparent earlier */
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    border-radius: 14px;
+    padding: 0;
+  }
+
+  .block img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .block .text {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  /* Right blocks keep same stacked style */
+  .block.right img {
+    border-radius: 14px 14px 0 0;
+  }
+
+  /* Side-decorations hidden on smaller screens (keep layout simple) */
+  .side-decor { display: none; }
+
+  /* typography scale down */
+  .hero h2 { font-size: 1.8rem; }
+  .hero p  { font-size: 1rem; line-height: 1.4; }
+}
+
+/* Fine-tune for very small screens */
+@media (max-width: 420px) {
+  .hero { min-height: 200px; aspect-ratio: auto; }
+  .hero h2 { font-size: 1.5rem; }
+  .transparent-nav a { font-size: 0.9rem; }
+  .content { padding: .75rem; }
+  .block .text { padding: .85rem; }
+}
+
+/* Adjust scroll offset for #home depending on viewport so Home link scrolls smoothly
+   and lands just after header on mobile and desktop. */
+#home {
+  scroll-margin-top: 50vh; /* default (desktop/tablet) */
+}
+@media (max-width: 900px) {
+  /* header is shorter on mobile so offset less */
+  #home { scroll-margin-top: 30vh; }
+}
