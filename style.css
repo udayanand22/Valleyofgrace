@@ -1,0 +1,273 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: 'Playfair Display', serif;
+  color: #333;
+  background: none;            /* move bg to header image */
+  min-height: 100vh;
+  overflow-x: hidden;         /* prevent horizontal scrollbar from wide image */
+}
+
+/* Header image (uses <header class="header-image"><img>...</header>) */
+.header-image {
+  position: relative;
+  width: 100vw;
+  height: 100vh;              /* full viewport height */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;                 /* removed padding-top that created the white gap */
+}
+
+.header-image img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;               /* ensure full viewport width */
+  height: 100vh;              /* changed from 90vh -> 100vh to fill viewport */
+  object-fit: cover;          /* crop/cover to fill without distortion */
+  object-position: center;
+  display: block;
+}
+
+
+/* keep nav below header (transparent) */
+.transparent-nav {
+  position: absolute;        /* sit over the header / background */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;   /* fully see-through so bg shows through */
+  padding: 0.75rem 2rem;
+  z-index: 50;               /* above header image */
+}
+
+/* make the list a single horizontal row */
+.transparent-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  flex-wrap: nowrap;         /* keep items on one line */
+  background: transparent;
+}
+
+/* list items - no extra block spacing */
+.transparent-nav li {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+/* links */
+.transparent-nav a {
+  color: #fff !important;    /* force white so links are visible over the image */
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  display: inline-block;
+  white-space: nowrap;       /* prevent wrapping */
+}
+
+/* hover */
+.transparent-nav a:hover {
+  color: #ffd;               /* subtle hover color - change as desired */
+  text-decoration: underline;
+}
+
+/* ensure header image isn't pushed down by nav */
+.header-image { 
+  padding-top: 3.5rem;      /* reserve space for the nav so overlay text doesn't clash — adjust as needed */
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background: transparent;
+  backdrop-filter: blur(8px);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 20; /* keep navbar above the banner */
+}
+
+
+
+
+.nav-links {
+    display: flex;
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+}
+
+.nav-links a:hover {
+  color: #6c584c;
+}
+
+/* Hero Section */
+.hero {
+  min-height: 60vh; /* full viewport height */
+  width: 100%;       /* full width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  color: transparent;
+
+  /* move banner background to the hero and ensure it fully covers area */
+  background: url('images/header.png') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed; /* optional: parallax-like effect, remove if not wanted */
+}
+
+/* make overlay/content narrower so banner looks more prominent */
+.overlay {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px; /* reduce width to make it "small" */
+  margin: 0 auto;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+}
+
+/* Content Blocks */
+.content {
+  margin: 5rem auto;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem;
+  background: transparent; /* keep underlying bg visible between blocks */
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.block:hover {
+  transform: translateY(-5px);
+}
+
+.block img {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+}
+
+.block .text {
+  padding: 2rem;
+  width: 50%;
+}
+
+.block.left img {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.block.right {
+  flex-direction: row-reverse;
+}
+
+.block.right img {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+/* Background for the rest of the page (below the header) */
+.main-body {
+  margin: 0;
+  padding: 4rem 1rem;
+  background: url('images/bg.png') no-repeat center top;
+  background-size: cover;          /* cover whole area */
+  background-attachment: fixed;    /* optional: parallax-like effect */
+  min-height: 100vh;
+}
+
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ensure the #home anchor lands below the 100vh header */
+#home {
+  scroll-margin-top: 50vh; /* adjust if header height changes (e.g. calc(100vh - 56px)) */
+}
+
+/* Fixed side decorations that stay in place while content scrolls */
+.side-decor {
+  position: absolute;               /* JS will set top px to header bottom */
+  width: 140px;
+  height: auto;
+  z-index: 30;
+  pointer-events: none;
+  visibility: visible;
+  opacity: 1;
+  transition: top .45s ease, transform .35s ease, opacity .35s ease;
+  transform-origin: center;
+}
+
+/* left / right baseline when absolute */
+.side-decor.left  { left: 14px;  transform: none; }
+.side-decor.right { right: 14px; transform: scaleX(-1); }
+
+/* fixed state: center vertically and keep mirrored right side */
+.side-decor.fixed {
+  position: fixed !important; /* force fixed when class present */
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  opacity: 0.98;
+}
+
+/* keep mirror for the right one when fixed */
+.side-decor.right.fixed {
+  transform: translateY(-50%) scaleX(-1);
+}
+
+/* ensure content has space for decorations */
+.content {
+  padding-left: calc(2rem + 160px);
+  padding-right: calc(2rem + 160px);
+}
+
+/* small screens hide them */
+@media (max-width: 900px) {
+  .side-decor { display: none; }
+  .content { padding-left: 2rem; padding-right: 2rem; }
+}

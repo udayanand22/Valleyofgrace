@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valley of Grace</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header Image -->
+  <header class="header-image">
+    <img src="images/header.png" alt="Valley of Grace">
+  </header>
+
+  <!-- Transparent Navbar below header -->
+  <nav class="transparent-nav">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#">Episodes</a></li>
+      <li><a href="#">Reflections</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- Background Section -->
+  <section class="main-body">
+    <div class="content">
+      <div id="home" class="block left">
+        <img src="images/home.jpg" alt="Reflection 1">
+        <div class="text">
+          <h3>The Rope That Never Breaks</h3>
+          <p>There are many doorways to grace, but spirituality is that quiet nectar that keeps you going...</p>
+        </div>
+      </div>
+
+      <div class="block right">
+        <img src="images/sample2.jpg" alt="Reflection 2">
+        <div class="text">
+          <h3>Light Within the River</h3>
+          <p>Grace isn’t something you find. It’s something that finds you — when you’re still enough to feel it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <img class="side-decor left" src="images/side.png" alt="">
+  <img class="side-decor right" src="images/side.png" alt="">
+
+  <script>
+  // place side images below the header (absolute so they scroll with page),
+  // then switch them to fixed centered when header is fully out of view.
+  document.addEventListener('DOMContentLoaded', function () {
+    const sides = Array.from(document.querySelectorAll('.side-decor'));
+    const header = document.querySelector('.header-image');
+    if (!sides.length || !header) return;
+
+    const OFFSET = 20; // px gap below header
+
+    // compute and set absolute top so images sit just below header in document coordinates
+    function placeBelowHeader() {
+      const topPx = header.offsetTop + header.offsetHeight + OFFSET;
+      sides.forEach(s => {
+        s.classList.remove('fixed');
+        s.style.position = 'absolute';
+        s.style.top = topPx + 'px';
+        // maintain baseline transform for symmetry
+        if (s.classList.contains('right')) s.style.transform = 'scaleX(-1)';
+        else s.style.transform = 'none';
+      });
+    }
+
+    // switch to fixed centered state
+    function fixToCenter() {
+      sides.forEach(s => {
+        s.classList.add('fixed');
+        // inline styles for fixed state (CSS .fixed handles transform/top)
+        s.style.position = 'fixed';
+        s.style.top = '50%';
+      });
+    }
+
+    // observe header visibility and toggle states
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // header is visible -> ensure sides are placed below header (scroll with page)
+          placeBelowHeader();
+        } else {
+          // header out of view -> make fixed centered
+          fixToCenter();
+        }
+      });
+    }, { threshold: 0 });
+
+    // initial placement and observation
+    placeBelowHeader();
+    io.observe(header);
+
+    // update placement on resize (header size/position may change)
+    window.addEventListener('resize', placeBelowHeader);
+  });
+  </script>
+
+</body>
+</html>
